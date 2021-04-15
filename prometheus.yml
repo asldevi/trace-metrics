@@ -10,7 +10,7 @@ global:
 # Scrape configs only contain one scrape target
 scrape_configs:
   - job_name: 'prometheus'
-    # Override the global default and scrape targets from this job every 5 seconds.
-    scrape_interval: 5s
+    metrics_path: '/metrics'
+    scrape_interval: 2s
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['app:8080']

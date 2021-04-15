@@ -11,7 +11,14 @@ services:
       - JAEGER_AGENT_PORT=6831
     networks:
       - trace-metrics
-  
+
+  httpbin:
+    image: kennethreitz/httpbin
+    ports:
+      - 8081:80
+    networks:
+      - trace-metrics
+
   prometheus:
     image: prom/prometheus
     ports:
@@ -32,11 +39,15 @@ services:
       - "16686:16686"
     networks:
       - trace-metrics
-  
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3001:3000
+    networks:
+      - trace-metrics
+
+
 networks:
   trace-metrics:
 
-  # grafana:
-  #   image: grafana/grafana
-  #   ports:
-  #   - 3001:3000

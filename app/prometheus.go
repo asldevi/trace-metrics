@@ -25,9 +25,9 @@ func init() {
 
 	reqDur = promauto.NewHistogramVec(
 		prometheus.HistogramOpts{
-			Name:    "request_duration_ms",
-			Buckets: []float64{1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192},
-			Help:    "HTTP request latencies in ms",
+			Name: "request_duration_ms",
+			// Buckets: []float64{10, 100, 200, 500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000},
+			Help: "HTTP request latencies in ms",
 		},
 		[]string{"code", "method", "url"},
 	)
