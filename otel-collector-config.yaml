@@ -1,0 +1,32 @@
+receivers:
+  jaeger:
+    protocols:
+      grpc:
+      thrift_http:
+  otlp:
+    protocols:
+      grpc:
+exporters:
+  kafka:
+    brokers:
+      - kafka:9092
+    protocol_version: 2.0.0
+    topic: jaeger-spans
+    encoding: jaeger_proto
+processors:
+  batch:
+
+extensions:
+  health_check:
+  pprof:
+    endpoint: :1888
+  zpages:
+    endpoint: :55679
+
+service:
+  extensions: [pprof, zpages, health_check]
+  pipelines:
+    traces:
+      receivers: [otlp, jaeger]
+      processors: [batch]
+      exporters: [kafka]
