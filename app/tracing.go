@@ -43,6 +43,13 @@ func TracingMiddleware() gin.HandlerFunc {
 	var serverSpan opentracing.Span
 	return func(c *gin.Context) {
 		spanName := c.FullPath()
+
+		if spanName == "/metrics" {
+			// execute other middlewares and return without creating span
+			c.Next()
+			return
+		}
+
 		spanCtx, _ := Tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(c.Request.Header))
 		serverSpan = Tracer.StartSpan(spanName, ext.RPCServerOption(spanCtx))
 		serverSpan.SetTag("request.host", c.Request.Host)
