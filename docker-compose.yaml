@@ -47,7 +47,5 @@ services:
     networks:
       - trace-metrics
 
-
 networks:
   trace-metrics:
-

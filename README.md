@@ -10,9 +10,22 @@ by tracing and metrics instrumentations.
 - Run application, Prometheus and Jaeger with the following.
     $ docker-compose up --build -d
 
+
+- Run application, Prometheus and Jaeger with the following.
+    $ docker-compose -f docker-compose-otel-ht.yaml up --build -d
+
+
 - Check that the app is responding to requests
-    - hit few requests with different delays
-    $ curl http://0.0.0.0:8080/external_request/1         #   send request with delay of 1 sec
+    - hit few requests with some delays 
+    ```
+     for i in {1..50}
+        do
+            delay=`jot -r 1 1  5`
+            curl http://0.0.0.0:8080/external_request/$delay
+            sleep 1
+        done
+    ```
+    for randomizing delays, do delay=`jot -r 1 1  5` in the above
 
 - Check that the app is traced by pointing your browser to http://0.0.0.0:16686/
 
